@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vegetables</title>
+  <!-- 引入 Google Fonts: Noto Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* 基本重置與全域設定 */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #e0e0e0; /* 畫布外圍底色，方便預覽 1440x1024 邊界 */
+      font-family: 'Noto Sans', sans-serif;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* 主版面規格：W1440 x H1024 */
+    .page-wrapper {
+      width: 1440px;
+      height: 1024px;
+      background-color: #EDF2C5; /* background */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    /* 內容區容器（排除底部滿版 Footer） */
+    .main-container {
+      padding: 36px 28px 0 28px;
+      flex: 1;
+    }
+
+    /* 頁首 Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 12px;
+    }
+
+    .logo {
+      font-size: 44px; /* Head1 */
+      font-weight: 900;
+      color: #778A50; /* Primary */
+      line-height: 1;
+    }
+
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .social-icon {
+      width: 24px;
+      height: 24px;
+      background-color: #778A50;
+      color: #EDF2C5;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .social-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: #EDF2C5;
+    }
+
+    .divider {
+      width: 1px;
+      height: 24px;
+      background-color: #778A50;
+      margin: 0 2px;
+    }
+
+    .btn-auth {
+      border: 1px solid #778A50;
+      border-radius: 3px;
+      padding: 3px 8px;
+      font-size: 14px; /* Text1 */
+      font-weight: 700;
+      color: #778A50;
+      text-decoration: none;
+      line-height: 1.2;
+    }
+
+    /* 導覽列 Navigation */
+    .nav {
+      background-color: #778A50;
+      border-radius: 3px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      padding: 0 30px;
+      gap: 60px;
+      margin-bottom: 18px;
+    }
+
+    .nav a {
+      color: #EDF2C5;
+      text-decoration: none;
+      font-size: 16px; /* Head2 */
+      font-weight: 700;
+      line-height: 24px;
+    }
+
+    /* 主視覺大圖 */
+    .hero-banner {
+      width: 100%;
+      height: 488px;
+      margin-bottom: 30px;
+    }
+
+    .hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* 下方內容區（左：4張蔬菜圖文 / 右：Contact） */
+    .content-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-left: 16px;
+    }
+
+    /* 左下 2x2 蔬菜介紹網格 */
+    .vegetables-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 386px);
+      column-gap: 24px;
+      row-gap: 36px;
+    }
+
+    .veg-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .veg-item img {
+      width: 170px;
+      height: 118px;
+      object-fit: cover;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .veg-item p {
+      width: 193px;
+      font-size: 12px; /* Text2 */
+      font-weight: 400;
+      line-height: 16.5px;
+      color: #3d4a26;
+    }
+
+    /* 右下 Contact 區塊 */
+    .contact-box {
+      width: 556px;
+    }
+
+    .contact-title {
+      background-color: #778A50;
+      color: #EDF2C5;
+      font-size: 16px; /* Head2 */
+      font-weight: 700;
+      line-height: 24px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      padding-left: 30px;
+      border-radius: 3px;
+      margin-bottom: 15px;
+    }
+
+    .contact-content {
+      background-color: #F7FBDA; /* content_bg */
+      padding: 18px 26px;
+      height: 214px;
+      color: #7D7D7D; /* content_text */
+      font-size: 12px; /* Text2 */
+      line-height: 18px; /* 150% */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .contact-line {
+      border: none;
+      border-top: 1px solid #7D7D7D;
+      margin: 10px 0;
+    }
+
+    .contact-info p {
+      line-height: 18px;
+    }
+
+    /* 頁尾 Footer */
+    .footer {
+      width: 100%;
+      height: 60px;
+      background-color: #778A50;
+      color: #EDF2C5;
+      font-size: 12px; /* Text2 */
+      line-height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrapper">
+    <div class="main-container">
+      
+      <!-- Header -->
+      <header class="header">
+        <h1 class="logo">Vegetables</h1>
+        <div class="btn-group">
+          <!-- Facebook Icon -->
+          <a href="#" class="social-icon" aria-label="Facebook">
+            <svg viewBox="0 0 24 24">
+              <path d="M15.12 5.32H17V2.14A26.11 26.11 0 0 0 14.26 2c-2.72 0-4.58 1.66-4.58 4.7v2.62H6.61v3.56h3.07V22h3.68v-9.12h3.06l.46-3.56h-3.52V6.65c0-1.05.29-1.73 1.76-1.73Z"/>
+            </svg>
+          </a>
+          <!-- Instagram Icon -->
+          <a href="#" class="social-icon" aria-label="Instagram">
+            <svg viewBox="0 0 24 24">
+              <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
+            </svg>
+          </a>
+          <span class="divider"></span>
+          <a href="#" class="btn-auth">LOGIN</a>
+          <a href="#" class="btn-auth">JOIN</a>
+        </div>
+      </header>
+
+      <!-- Navigation -->
+      <nav class="nav">
+        <a href="#">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">Vegetables</a>
+        <a href="#">Online</a>
+        <a href="#">Contact</a>
+      </nav>
+
+      <!-- Main Pumpkin Image (5-.png) -->
+      <section class="hero-banner">
+        <img src="images/5-.png" alt="Main Pumpkins">
+      </section>
+
+      <!-- Bottom Section -->
+      <section class="content-bottom">
+        
+        <!-- Left 2x2 Vegetables Grid -->
+        <div class="vegetables-grid">
+          <!-- 左上：紅蘿蔔 (4-.png) -->
+          <div class="veg-item">
+            <img src="images/4-.png" alt="Carrots">
+            <p>Crunchy and naturally sweet, our farm-fresh carrots are packed with essential nutrients. They are the perfect choice for a healthy snack, a colorful salad, or a hearty stew.</p>
+          </div>
+
+          <!-- 右上：黃甜椒 (1-.png) -->
+          <div class="veg-item">
+            <img src="images/1-.png" alt="Yellow Bell Peppers">
+            <p>Bright, crisp, and refreshing, our yellow bell peppers offer a remarkably mild, sweet flavor. These juicy peppers are excellent for fresh salads, stir-fries, or as a roasted side dish.</p>
+          </div>
+
+          <!-- 左下：玉米 (3-.png) -->
+          <div class="veg-item">
+            <img src="images/3-.png" alt="Corn">
+            <p>Picked at peak ripeness, our golden sweet corn offers an irresistible sweetness. Filled with plump kernels, they are fantastic for boiling, grilling, or enriching your favorite warm soups.</p>
+          </div>
+
+          <!-- 右下：南瓜 (2-.png) -->
+          <div class="veg-item">
+            <img src="images/2-.png" alt="Pumpkins">
+            <p>Earthy and highly nutritious, our vibrant pumpkins boast a subtly sweet, nutty flavor. They are incredibly versatile and perfect for roasting, baking into pies, or blending into velvety soups.</p>
+          </div>
+        </div>
+
+        <!-- Right Contact Section -->
+        <aside class="contact-box">
+          <div class="contact-title">Contact</div>
+          <div class="contact-content">
+            <p>“Welcome to our fresh fruit and produce collection! We are dedicated to bringing vibrant, naturally sweet, and farm-fresh harvests directly to your table. Handpicked at peak ripeness from trusted local farms, every item offers the perfect balance of delicious flavor and essential nutrients. Whether you are looking for a healthy everyday snack, ingredients for a vibrant salad, or wholesome additions to your family meals, our seasonal selections are carefully curated to support your healthy and active lifestyle.”</p>
+            <hr class="contact-line">
+            <div class="contact-info">
+              <p>E-mail : Vegetables@aaabbccc.com</p>
+              <p>PHONE : +886-123-456-789</p>
+            </div>
+          </div>
+        </aside>
+
+      </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      Copyrights 2017 Vegetables cise / Design by Vegetables
+    </footer>
+  </div>
+
+</body>
+</html>
